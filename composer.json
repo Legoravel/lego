@@ -1,0 +1,40 @@
+{
+    "name": "legoravel/lego",
+    "description": "An architecture for scalable Laravel application.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["architecture", "lego", "laravel", "legoravel"],
+    "homepage": "https://lego.kingcode.ovh",
+    "bin": ["lego"],
+    "support": {
+        "source": "https://github.com/legoravel/lego",
+        "issues": "https://github.com/legoravel/lego/issues",
+        "discussions": "https://github.com/legoravel/lego/discussions"
+    },
+    "authors": [
+        {
+            "name": "Aboozar Ghaffari",
+            "email": "aboozar.ghf@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "ext-dom": "*",
+        "mockery/mockery": "*",
+        "symfony/console": "*",
+        "symfony/filesystem": "*",
+        "symfony/finder": "*",
+        "symfony/process": "*",
+        "illuminate/support": ">=v10.37.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lego\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
