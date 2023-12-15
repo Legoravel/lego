@@ -5,6 +5,7 @@ set -e
 # Check if file or directory exists. Exit if it doesn't.
 examine() {
     if [ ! -f $1 ] && [ ! -d $1 ]; then
+        # shellcheck disable=SC2028
         echo "\n-- ERROR -- $1 could not be found!\n"
         exit 1
     fi
@@ -160,6 +161,7 @@ rm app/Http/Controllers/TradeController.php
 ./vendor/bin/lego delete:operation twist harbour
 rm app/Services/Harbour/Http/Controllers/TradeController.php
 
+# shellcheck disable=SC2028
 echo "\nPASSED!\n"
 
 exit 0
