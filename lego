@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+
+if (file_exists('./vendor/autoload.php')) {
+    require './vendor/autoload.php';
+} else if(file_exists(__DIR__.'/vendor/autoload.php')) {
+    require __DIR__.'/vendor/autoload.php';
+} else {
+    require __DIR__.'/../../../bootstrap/autoload.php';
+}
+
+if (file_exists('./bootstrap/app.php')) {
+    $laravel = require'./bootstrap/app.php';
+} else {
+    $laravel = require __DIR__.'/../../../bootstrap/app.php';
+}
+
+$commands = [
+    new Lego\Console\Commands\InitMicroCommand(),
+    new Lego\Console\Commands\InitMonolithCommand(),
+    new Lego\Console\Commands\ChangeSourceNamespaceCommand(),
+    new Lego\Console\Commands\JobMakeCommand(),
+    new Lego\Console\Commands\JobDeleteCommand(),
+    new Lego\Console\Commands\ServiceMakeCommand(),
+    new Lego\Console\Commands\ServiceDeleteCommand(),
+    new Lego\Console\Commands\FeatureMakeCommand(),
+    new Lego\Console\Commands\FeatureDeleteCommand(),
+    new Lego\Console\Commands\ControllerMakeCommand(),
+    new Lego\Console\Commands\MigrationMakeCommand(),
+    new Lego\Console\Commands\ServicesListCommand(),
+    new Lego\Console\Commands\FeaturesListCommand(),
+
+    new Lego\Console\Commands\ModelMakeCommand(),
+    new Lego\Console\Commands\ModelDeleteCommand(),
+    new Lego\Console\Commands\RequestMakeCommand(),
+    new Lego\Console\Commands\RequestDeleteCommand(),
+    new Lego\Console\Commands\PolicyMakeCommand(),
+    new Lego\Console\Commands\PolicyDeleteCommand(),
+
+    new Lego\Console\Commands\OperationMakeCommand(),
+    new Lego\Console\Commands\OperationDeleteCommand(),
+];
+
+$app = new Symfony\Component\Console\Application('Lego', '1.0.0');
+array_walk($commands, [$app, 'add']);
+
+$app->run();
