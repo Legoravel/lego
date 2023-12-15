@@ -62,9 +62,9 @@ class FeatureGenerator extends Generator
         );
     }
 
-    private function classname($feature)
+    private function classname($feature): ?string
     {
-        $parts = explode(DS, $feature);
+        $parts = explode(DIRECTORY_SEPARATOR, $feature);
 
         return array_pop($parts);
     }
@@ -87,7 +87,7 @@ class FeatureGenerator extends Generator
 
         $content = str_replace(
             ['{{namespace}}', '{{testclass}}', '{{feature}}', '{{feature_namespace}}'],
-            [$namespace, $testClass, Str::snake(str_replace(DS, '', $feature)), $featureNamespace],
+            [$namespace, $testClass, Str::snake(str_replace(DIRECTORY_SEPARATOR, '', $feature)), $featureNamespace],
             $content
         );
 
