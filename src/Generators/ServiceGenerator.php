@@ -62,7 +62,6 @@ class ServiceGenerator extends Generator
             $name,
             $slug,
             $path,
-            $this->relativeFromReal($path)
         );
     }
 
@@ -83,11 +82,13 @@ class ServiceGenerator extends Generator
     /**
      * Add the corresponding service provider for the created service.
      *
-     * @param string $name
-     * @param string $path
-     * @return bool
+     * @param  string  $name
+     * @param  string  $slug
+     * @param  string  $path
+     * @return void
+     * @throws Exception
      */
-    public function addServiceProviders($name, $slug, $path): bool
+    public function addServiceProviders(string $name, string $slug, string $path): void
     {
         $namespace = $this->findServiceNamespace($name) . '\\Providers';
 
@@ -101,10 +102,12 @@ class ServiceGenerator extends Generator
     /**
      * Create the service provider that registers this service.
      *
-     * @param string $name
-     * @param string $path
+     * @param  string  $name
+     * @param  string  $path
+     * @param  string  $slug
+     * @param  string  $namespace
      */
-    public function createRegistrationServiceProvider(string $name, string $path, $slug, $namespace): void
+    public function createRegistrationServiceProvider(string $name, string $path, string $slug, string $namespace): void
     {
         $stub = 'serviceprovider.stub';
         if ((int)$this->laravelVersion() > 7) {
@@ -124,12 +127,13 @@ class ServiceGenerator extends Generator
     /**
      * Create the routes service provider file.
      *
-     * @param string $name
-     * @param string $path
-     * @param string $slug
-     * @param string $namespace
+     * @param  string  $name
+     * @param  string  $path
+     * @param  string  $slug
+     * @param  string  $namespace
+     * @throws Exception
      */
-    public function createRouteServiceProvider(string $name, string $path, string $slug, string $namespace)
+    public function createRouteServiceProvider(string $name, string $path, string $slug, string $namespace): void
     {
         $serviceNamespace = $this->findServiceNamespace($name);
         $controllers = $serviceNamespace . '\Http\Controllers';
