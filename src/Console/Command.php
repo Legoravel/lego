@@ -2,6 +2,8 @@
 
 namespace Lego\Console;
 
+use Exception;
+use Illuminate\Contracts\Support\Arrayable;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,19 +14,19 @@ trait Command
     /**
      * @var InputInterface
      */
-    protected $input;
+    protected InputInterface $input;
 
     /**
      * @var OutputInterface
      */
-    protected $output;
+    protected OutputInterface $output;
 
     /**
      * Configure the command options.
      *
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName($this->name)
@@ -44,7 +46,7 @@ trait Command
      *
      * @return array
      */
-    public function getArguments()
+    public function getArguments(): array
     {
         return [];
     }
@@ -54,15 +56,16 @@ trait Command
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [];
     }
 
     /**
      * Execute the command.
+     * @throws Exception
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = $output;
@@ -76,7 +79,7 @@ trait Command
      * @param  string  $key
      * @return string
      */
-    public function argument($key)
+    public function argument(string $key): string
     {
         return $this->input->getArgument($key);
     }
@@ -87,7 +90,7 @@ trait Command
      * @param  string  $key
      * @return string
      */
-    public function option($key)
+    public function option(string $key): string
     {
         return $this->input->getOption($key);
     }
@@ -97,7 +100,7 @@ trait Command
      *
      * @param  string  $string
      */
-    public function info($string)
+    public function info(string $string): void
     {
         $this->output->writeln("<info>$string</info>");
     }
@@ -108,7 +111,7 @@ trait Command
      * @param  string  $string
      * @return void
      */
-    public function comment($string)
+    public function comment(string $string): void
     {
         $this->output->writeln("<comment>$string</comment>");
     }
@@ -119,7 +122,7 @@ trait Command
      * @param  string  $string
      * @return void
      */
-    public function error($string)
+    public function error(string $string): void
     {
         $this->output->writeln("<error>$string</error>");
     }
@@ -127,11 +130,12 @@ trait Command
     /**
      * Format input to textual table.
      *
-     * @param  \Illuminate\Contracts\Support\Arrayable|array  $rows
+     * @param  array  $headers
+     * @param  array|Arrayable  $rows
      * @param  string  $style
      * @return void
      */
-    public function table(array $headers, $rows, $style = 'default')
+    public function table(array $headers, array|Arrayable $rows, string $style = 'default'): void
     {
         $table = new Table($this->output);
 
@@ -146,15 +150,16 @@ trait Command
      * Ask the user the given question.
      *
      * @param  string  $question
+     * @param  bool  $default
      * @return string
      */
-    public function ask($question, $default = false)
+    public function ask(string $question, $default = false): string
     {
         $question = '<comment>'.$question.'</comment> ';
 
         $confirmation = new ConfirmationQuestion($question, false);
 
-        return $this->getHelperSet()->get('question')->ask($this->input, $this->output, $confirmation);
+        return $this->getHelperSet()?->get('question')->ask($this->input, $this->output, $confirmation);
     }
 
     /**
@@ -163,10 +168,10 @@ trait Command
      * @param  string  $question
      * @return string
      */
-    public function secret($question)
+    public function secret(string $question): string
     {
         $question = '<comment>'.$question.'</comment> ';
 
-        return $this->getHelperSet()->get('dialog')->askHiddenResponse($this->output, $question, false);
+        return $this->getHelperSet()?->get('dialog')->askHiddenResponse($this->output, $question, false);
     }
 }
