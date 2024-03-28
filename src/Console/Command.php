@@ -77,9 +77,9 @@ trait Command
      * Get an argument from the input.
      *
      * @param  string  $key
-     * @return string
+     * @return string|null
      */
-    public function argument(string $key): string
+    public function argument(string $key): ?string
     {
         return $this->input->getArgument($key);
     }
@@ -88,9 +88,9 @@ trait Command
      * Get an option from the input.
      *
      * @param  string  $key
-     * @return string
+     * @return string|null
      */
-    public function option(string $key): string
+    public function option(string $key): ?string
     {
         return $this->input->getOption($key);
     }
