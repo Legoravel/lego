@@ -7,14 +7,20 @@ use Lego\Units\Job;
 
 class RespondWithJsonErrorJob extends Job
 {
-    public function __construct($message = 'An error occurred', $code = 400, $status = 400, $headers = [], $options = 0)
+    public function __construct(
+        string $message = 'An error occurred',
+        int $code = 400,
+        int $status = 400,
+        array $headers = [],
+        int $options = 0,
+        array $errors = []
+    )
     {
         $this->content = [
+            'message' => $message,
             'status' => $status,
-            'error' => [
-                'code' => $code,
-                'message' => $message,
-            ],
+            'code' => $code,
+            'errors' => $errors,
         ];
 
         $this->status = $status;

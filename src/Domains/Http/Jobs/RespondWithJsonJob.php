@@ -15,7 +15,7 @@ class RespondWithJsonJob extends Job
 
     protected $options;
 
-    public function __construct($content, $status = 200, array $headers = [], $options = 0)
+    public function __construct($content, int $status = 200, array $headers = [], int $options = 0)
     {
         $this->content = $content;
         $this->status = $status;
