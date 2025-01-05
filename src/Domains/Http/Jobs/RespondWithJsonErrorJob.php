@@ -7,25 +7,22 @@ use Lego\Units\Job;
 
 class RespondWithJsonErrorJob extends Job
 {
+    protected array $content;
+
     public function __construct(
-        string $message = 'An error occurred',
-        int $code = 400,
-        int $status = 400,
-        array $headers = [],
-        int $options = 0,
-        array $errors = []
+        protected string $message = 'An error occurred',
+        protected int $status = 400,
+        protected array $headers = [],
+        protected int $options = JSON_FORCE_OBJECT,
+        protected array $errors = [],
     )
     {
         $this->content = [
             'message' => $message,
             'status' => $status,
-            'code' => $code,
             'errors' => $errors,
+            'request_tracking_id' => REQUEST_TRACKING_ID
         ];
-
-        $this->status = $status;
-        $this->headers = $headers;
-        $this->options = $options;
     }
 
     public function handle(ResponseFactory $response)
