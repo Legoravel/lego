@@ -42,9 +42,9 @@ class OperationMakeCommand extends SymfonyCommand
     /**
      * Execute the console command.
      *
-     * @return bool|null
+     * @return void
      */
-    public function handle(): ?bool
+    public function handle(): void
     {
         $generator = new OperationGenerator();
 
